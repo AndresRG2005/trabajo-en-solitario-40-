@@ -25,5 +25,27 @@ public class UserManager {
         return true;
     }
 
+    public boolean login(String email, String password) throws IOException {
+        try (var reader = Files.newBufferedReader(fm.getUsersFile(), StandardCharsets.UTF_8)) {
+            String linea;
+            while ((linea = reader.readLine()) != null) {
+                String[] p = linea.split(";");
+                if (p.length == 2 && p[0].equals(email) && p[1].equals(password)) return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean existeUsuario(String email) throws IOException {
+        try (var reader = Files.newBufferedReader(fm.getUsersFile(), StandardCharsets.UTF_8)) {
+            String linea;
+            while ((linea = reader.readLine()) != null) {
+                if (linea.startsWith(email + ";")) return true;
+            }
+        }
+        return false;
+    }
 }
+
+
 
