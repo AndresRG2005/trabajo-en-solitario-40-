@@ -38,4 +38,20 @@ public class NoteManager {
         }
         return notas;
     }
+
+    public void eliminarNota(String email, int index) throws IOException {
+        List<Nota> notas = leerNotas(email);
+        if (index < 0 || index >= notas.size()) return;
+
+        notas.remove(index);
+
+        Path notasFile = fm.getNotasFileForUser(email);
+
+        try (var writer = Files.newBufferedWriter(notasFile, StandardCharsets.UTF_8, StandardOpenOption.TRUNCATE_EXISTING)) {
+            for (Nota n : notas) {
+                writer.write(n.titulo() + ";" + n.contenido());
+                writer.newLine();
+            }
+        }
+    }
 }
