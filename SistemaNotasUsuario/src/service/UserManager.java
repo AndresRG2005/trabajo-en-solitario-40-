@@ -1,4 +1,4 @@
-package service;
+package SistemaNotasUsuario.src.service;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;

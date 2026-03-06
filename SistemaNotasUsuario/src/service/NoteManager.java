@@ -1,16 +1,19 @@
-package service;
+package SistemaNotasUsuario.src.service;
 
-import model.Nota;
+import SistemaNotasUsuario.src.model.Nota;
+
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class NoteManager {
 
     private final FileManager fm;
+    private Nota Nota;
 
     public NoteManager(FileManager fm) {
         this.fm = fm;
@@ -25,7 +28,7 @@ public class NoteManager {
         }
     }
 
-    public List<Nota> leerNotas(String email) throws IOException {
+    public Nota leerNotas(String email) throws IOException {
         Path notasFile = fm.getNotasFileForUser(email);
         List<Nota> notas = new ArrayList<>();
 
@@ -36,11 +39,11 @@ public class NoteManager {
                 if (p.length == 2) notas.add(new Nota(p[0], p[1]));
             }
         }
-        return notas;
+        return Nota;
     }
 
     public void eliminarNota(String email, int index) throws IOException {
-        List<Nota> notas = leerNotas(email);
+        List<Nota> notas = Collections.singletonList(leerNotas(email));
         if (index < 0 || index >= notas.size()) return;
 
         notas.remove(index);

@@ -1,9 +1,13 @@
-package app;
+package SistemaNotasUsuario.src.app;
 
-import service.*;
-import model.Nota;
+import SistemaNotasUsuario.src.model.Nota;
+import SistemaNotasUsuario.src.service.FileManager;
+import SistemaNotasUsuario.src.service.NoteManager;
+import SistemaNotasUsuario.src.service.UserManager;
+
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -143,7 +147,7 @@ public class Main {
     private static void listarNotas(String email, NoteManager noteManager) {
         System.out.println("---- LISTAR NOTAS ----");
         try {
-            List<Nota> notas = noteManager.leerNotas(email);
+            List<Nota> notas = Collections.singletonList(noteManager.leerNotas(email));
             if (notas.isEmpty()) {
                 System.out.println("No hay notas.");
                 return;
@@ -163,9 +167,11 @@ public class Main {
         System.out.print("Número de nota: ");
         try {
             int index = Integer.parseInt(SC.nextLine()) - 1;
-            Nota n = noteManager.leerNotas(email).get(index);
+            Nota n = noteManager.leerNotas(email);
+
             System.out.println("Título: " + n.titulo());
             System.out.println("Contenido: " + n.contenido());
+
         } catch (Exception e) {
             System.out.println("Índice inválido.");
         }
