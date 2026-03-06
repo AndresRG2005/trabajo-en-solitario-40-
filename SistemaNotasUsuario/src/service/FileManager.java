@@ -19,5 +19,21 @@ public class FileManager {
         if (!Files.exists(usuariosPath)) Files.createDirectories(usuariosPath);
     }
 
+    public Path getUsersFile() {
+        return usersFile;
+    }
+
+    public Path getNotasFileForUser(String email) throws IOException {
+        String carpeta = email.replace("@", "_").replace(".", "_");
+        Path userFolder = usuariosPath.resolve(carpeta);
+
+        if (!Files.exists(userFolder)) Files.createDirectories(userFolder);
+
+        Path notasFile = userFolder.resolve("notas.txt");
+        if (!Files.exists(notasFile)) Files.createFile(notasFile);
+
+        return notasFile;
+    }
 }
+
 
